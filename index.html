@@ -3,124 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teddy Day Surprise 🧸</title>
+<title>Happy Teddy Day 🧸</title>
 
 <style>
-:root{
-  --pink:#ff5c8a;
-  --glass:rgba(255,255,255,.18);
-}
-*{box-sizing:border-box;font-family:Poppins,sans-serif}
-
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{
   margin:0;min-height:100vh;
-  background:linear-gradient(120deg,#2b1055,#ff758c,#ffd6a5);
-  background-size:400% 400%;
-  animation:bg 15s ease infinite;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;color:#fff
+  background:linear-gradient(270deg,#ff9a9e,#fad0c4,#ffd1ff);
+  background-size:600% 600%;
+  animation:bg 12s ease infinite;
+  display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
 }
-@keyframes bg{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
+@keyframes bg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
 
-/* FLOATING */
-.float{
-  position:fixed;bottom:-40px;
-  font-size:24px;
-  animation:float 9s linear infinite;
-  opacity:.7
-}
-@keyframes float{
-  0%{transform:translateY(0) scale(.6);opacity:0}
-  20%{opacity:1}
-  100%{transform:translateY(-120vh) scale(1.2);opacity:0}
-}
-
-/* CARD */
 .card{
-  width:94%;max-width:430px;
-  padding:26px;border-radius:30px;
-  background:var(--glass);
-  backdrop-filter:blur(18px);
-  box-shadow:0 30px 60px rgba(0,0,0,.45);
-  text-align:center;
-  animation:enter .6s ease
+  width:92%;max-width:420px;
+  background:rgba(255,255,255,.2);
+  backdrop-filter:blur(16px);
+  border-radius:24px;
+  padding:24px;text-align:center;
+  color:#fff;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+  animation:pop .6s ease;
 }
-@keyframes enter{
-  from{opacity:0;transform:scale(.9)}
-  to{opacity:1}
-}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 
-button,input{
-  padding:14px;border-radius:30px;
-  border:none;font-size:15px;
-}
+h1{margin:0;color:#fff}
 button{
-  background:linear-gradient(135deg,#ff8fab,#ff4d6d);
-  color:white;cursor:pointer;
-  box-shadow:0 12px 30px rgba(0,0,0,.4)
+  padding:12px 24px;border:none;border-radius:30px;
+  background:linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:#fff;font-size:16px;cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.4)
 }
 button:active{transform:scale(.95)}
 
+input{
+  padding:12px;width:80%;border-radius:30px;border:none;
+  text-align:center;font-size:16px;margin:12px 0
+}
+
+/* Teddy */
+.teddy{
+  font-size:80px;
+  animation:walk 3s ease forwards;
+}
+@keyframes walk{
+  from{transform:translateX(-120px)}
+  to{transform:translateX(0)}
+}
+.hug{animation:hug .6s infinite alternate}
+@keyframes hug{from{transform:scale(1)}to{transform:scale(1.08)}}
+
+/* Grid */
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px
+  gap:14px;margin-top:14px
 }
-.teddy{
-  background:rgba(255,255,255,.28);
-  border-radius:24px;
-  padding:20px;
+.item{
+  background:rgba(255,255,255,.25);
+  border-radius:20px;
+  padding:16px;
   cursor:pointer;
-  transition:.4s;
+  transition:.3s;
 }
-.teddy:hover{
-  transform:translateY(-8px) scale(1.08);
-  box-shadow:0 20px 45px rgba(0,0,0,.45)
+.item:hover{
+  transform:translateY(-6px) scale(1.05);
+  box-shadow:0 10px 25px rgba(0,0,0,.4)
 }
-.teddy span{font-size:42px;display:block}
 
-.modal{
+/* Cinema Scene */
+.cinema{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;align-items:center;justify-content:center
+  background:rgba(0,0,0,.85);
+  display:none;
+  justify-content:center;align-items:flex-end;
+  padding:30px;
 }
-.modal-box{
-  background:#fff;color:#333;
-  padding:26px;border-radius:26px;
-  width:88%;max-width:350px;
+.subtitle{
+  color:#fff;
+  font-size:18px;
   text-align:center;
+  min-height:60px;
 }
 
-.hidden{display:none}
-
-/* 🧸 WALKING TEDDY */
-.walking-teddy{
-  position:fixed;
-  bottom:20px;
-  left:-80px;
-  font-size:60px;
-  animation:walk 8s linear infinite;
-}
-@keyframes walk{
-  0%{left:-80px;transform:scaleX(1)}
-  50%{transform:translateY(-10px)}
-  100%{left:110vw;transform:scaleX(1)}
+/* Night Ending */
+.night{
+  background:linear-gradient(#020024,#090979,#000);
 }
 
-/* 🎊 CONFETTI */
-.confetti{
-  position:fixed;
-  top:-20px;
-  font-size:20px;
-  animation:confetti 6s linear infinite;
+/* Back */
+.back{
+  position:absolute;top:12px;left:12px;
+  font-size:14px
 }
-@keyframes confetti{
-  0%{transform:translateY(0) rotate(0deg);opacity:1}
-  100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+
+/* Hearts */
+.heart{
+  position:fixed;bottom:-20px;
+  animation:float 6s linear infinite;
+  opacity:.6;font-size:20px
+}
+@keyframes float{
+  0%{transform:translateY(0);opacity:0}
+  50%{opacity:1}
+  100%{transform:translateY(-120vh);opacity:0}
 }
 </style>
 </head>
@@ -128,110 +116,92 @@ button:active{transform:scale(.95)}
 <body>
 
 <script>
-["🧸","💖","✨","🎀"].forEach(e=>{
-  for(let i=0;i<6;i++){
-    let f=document.createElement("div");
-    f.className="float";
-    f.innerHTML=e;
-    f.style.left=Math.random()*100+"vw";
-    f.style.animationDelay=Math.random()*6+"s";
-    document.body.appendChild(f);
-  }
-});
+for(let i=0;i<15;i++){
+ let h=document.createElement("div");
+ h.className="heart";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDelay=Math.random()*5+"s";
+ h.innerHTML="💖";
+ document.body.appendChild(h);
+}
 </script>
 
 <!-- LOCK -->
 <div class="card" id="lock">
-  <h1>🔒 Teddy Day</h1>
-  <p>One soft hug inside 💕</p>
+  <h1>🧸 Teddy Day</h1>
+  <p>For someone special</p>
   <input id="pass" placeholder="Enter password">
-  <br><br>
   <button onclick="unlock()">Unlock</button>
 </div>
 
 <!-- SHOP -->
-<div class="card hidden" id="shop">
-  <h1>🧸 Choose Your Teddy</h1>
-  💰 Wallet: ₹<span id="money">100</span>
+<div class="card" id="shop" style="display:none">
+  <button class="back" onclick="goBack()">⬅ Back</button>
+  <div class="teddy" id="teddy">🧸</div>
+  <h1>Choose a Teddy</h1>
+
   <div class="grid">
-    <div class="teddy" onclick="buy(0)"><span>🧸</span>Classic</div>
-    <div class="teddy" onclick="buy(1)"><span>🧸🎀</span>Bow</div>
-    <div class="teddy" onclick="buy(2)"><span>🧸💖</span>Love</div>
-    <div class="teddy" onclick="buy(3)"><span>🧸✨</span>Magic</div>
-    <div class="teddy" onclick="buy(4)"><span>🧸🌸</span>Cute</div>
-    <div class="teddy" onclick="buy(5)"><span>🧸😄</span>Happy</div>
+    <div class="item" onclick="buy(0)">🧸 Pink Teddy</div>
+    <div class="item" onclick="buy(1)">🐻 Brown Teddy</div>
+    <div class="item" onclick="buy(2)">🧸 Cute Teddy</div>
+    <div class="item" onclick="buy(3)">🐻 Soft Teddy</div>
+    <div class="item" onclick="buy(4)">🧸 Mini Teddy</div>
+    <div class="item" onclick="buy(5)">🐻 Fluffy Teddy</div>
+    <div class="item" onclick="buy(6)">🧸 Special Teddy</div>
   </div>
 </div>
 
-<!-- MESSAGE -->
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h2>🧸 Message</h2>
-    <p id="msg"></p>
-    <button onclick="next()">Next ➡️</button>
-  </div>
-</div>
-
-<!-- DELIVERY -->
-<div class="card hidden" id="delivery">
-  <h1>🚚 Delivery</h1>
-  <p>Your teddy is on the way…<br>
-  But real delivery is <b>my smile to you 💖</b></p>
-  <button onclick="final()">Final Surprise 🎁</button>
-</div>
-
-<!-- FINAL -->
-<div class="card hidden" id="final">
-  <h1>🧸💖 Happy Teddy Day Piya</h1>
-  <p>This teddy hugs you tighter every time you smile 🤗</p>
-  <div class="walking-teddy">🧸</div>
+<!-- CINEMA -->
+<div class="cinema" id="cinema">
+  <div class="subtitle" id="subtitle"></div>
 </div>
 
 <script>
-let wallet=100;
-const msgs=[
-  "Smile thodi si 😄",
-  "Teddy + You = Perfect 💖",
-  "Extra hugs unlocked 🤗",
-  "Ye teddy sirf tumhara 🧸",
-  "Soft heart, soft teddy 💕",
-  "Cute overload alert 😜"
+const lines=[
+ "Filmon mein teddy sirf gift hota hai… yahan emotion hai 😌",
+ "Hero entry nahi hai, par teddy full attitude mein hai 😎",
+ "Ye teddy hai, warranty ke saath cuteness free 🧸",
+ "Bollywood logic: teddy diya toh smile guaranteed 😄",
+ "Is teddy ko hug kiya toh stress refund milta hai 😜",
+ "Ye scene romantic nahi… comfortable hai 💕",
+ "Delivery thodi late hai, par feeling on time hai ❤️"
 ];
 
 function unlock(){
-  if(pass.value==="piya"){
-    lock.classList.add("hidden");
-    shop.classList.remove("hidden");
-  } else alert("Wrong password 😅");
+ if(pass.value==="piya"){
+   lock.style.display="none";
+   shop.style.display="block";
+ }
+ else alert("Wrong password 😅");
 }
 
 function buy(i){
-  wallet-=100;
-  msg.innerText=msgs[i];
-  modal.style.display="flex";
-  wallet+=100;
-  money.innerText=wallet;
+ teddy.classList.add("hug");
+ showCinema(lines[i]);
+ setTimeout(endScene,4500);
 }
 
-function next(){
-  modal.style.display="none";
-  shop.classList.add("hidden");
-  delivery.classList.remove("hidden");
+function showCinema(text){
+ cinema.style.display="flex";
+ subtitle.innerHTML="";
+ let i=0;
+ let t=setInterval(()=>{
+   subtitle.innerHTML+=text.charAt(i);
+   i++;
+   if(i>=text.length)clearInterval(t);
+ },40);
 }
 
-function final(){
-  delivery.classList.add("hidden");
-  document.getElementById("final").classList.remove("hidden");
+function endScene(){
+ cinema.style.display="none";
+ document.body.classList.add("night");
+ alert("🧸 Delivered to you 💌\nHappy Teddy Day!");
+}
 
-  // 🎊 CONFETTI BLAST
-  for(let i=0;i<30;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.innerHTML=["🎊","✨","💖","🎀"][Math.floor(Math.random()*4)];
-    c.style.left=Math.random()*100+"vw";
-    c.style.animationDelay=Math.random()*3+"s";
-    document.body.appendChild(c);
-  }
+function goBack(){
+ shop.style.display="none";
+ lock.style.display="block";
+ document.body.classList.remove("night");
 }
 </script>
 
