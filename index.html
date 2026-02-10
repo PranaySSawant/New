@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,38 +30,51 @@ body{
 }
 @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 
-h1{margin:0;color:#fff}
 button{
   padding:12px 24px;border:none;border-radius:30px;
   background:linear-gradient(135deg,#ff4d6d,#ff758f);
   color:#fff;font-size:16px;cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.4)
 }
-button:active{transform:scale(.95)}
-
 input{
   padding:12px;width:80%;border-radius:30px;border:none;
   text-align:center;font-size:16px;margin:12px 0
 }
 
-/* Teddy */
+/* TEDDY */
 .teddy{
-  font-size:80px;
-  animation:walk 3s ease forwards;
+  font-size:90px;
+  user-select:none;
+  cursor:pointer;
+  animation:walk 2.5s ease forwards;
 }
 @keyframes walk{
   from{transform:translateX(-120px)}
   to{transform:translateX(0)}
 }
+.shake{animation:shake .4s}
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  50%{transform:translateX(8px)}
+  75%{transform:translateX(-8px)}
+  100%{transform:translateX(0)}
+}
 .hug{animation:hug .6s infinite alternate}
-@keyframes hug{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes hug{from{transform:scale(1)}to{transform:scale(1.1)}}
+
+/* EMOJI FLOAT */
+.emoji{
+  position:fixed;
+  font-size:24px;
+  animation:floatUp 2s ease forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120px);opacity:0}
+}
 
 /* Grid */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;margin-top:14px
-}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
 .item{
   background:rgba(255,255,255,.25);
   border-radius:20px;
@@ -68,12 +82,9 @@ input{
   cursor:pointer;
   transition:.3s;
 }
-.item:hover{
-  transform:translateY(-6px) scale(1.05);
-  box-shadow:0 10px 25px rgba(0,0,0,.4)
-}
+.item:hover{transform:translateY(-6px) scale(1.05)}
 
-/* Cinema Scene */
+/* Cinema */
 .cinema{
   position:fixed;inset:0;
   background:rgba(0,0,0,.85);
@@ -81,64 +92,30 @@ input{
   justify-content:center;align-items:flex-end;
   padding:30px;
 }
-.subtitle{
-  color:#fff;
-  font-size:18px;
-  text-align:center;
-  min-height:60px;
-}
+.subtitle{color:#fff;font-size:18px;text-align:center}
 
-/* Night Ending */
-.night{
-  background:linear-gradient(#020024,#090979,#000);
-}
+/* Night */
+.night{background:linear-gradient(#020024,#090979,#000)}
+.back{position:absolute;top:12px;left:12px}
 
-/* Back */
-.back{
-  position:absolute;top:12px;left:12px;
-  font-size:14px
-}
-
-/* Hearts */
-.heart{
-  position:fixed;bottom:-20px;
-  animation:float 6s linear infinite;
-  opacity:.6;font-size:20px
-}
-@keyframes float{
-  0%{transform:translateY(0);opacity:0}
-  50%{opacity:1}
-  100%{transform:translateY(-120vh);opacity:0}
-}
 </style>
 </head>
 
 <body>
 
-<script>
-for(let i=0;i<15;i++){
- let h=document.createElement("div");
- h.className="heart";
- h.style.left=Math.random()*100+"vw";
- h.style.animationDelay=Math.random()*5+"s";
- h.innerHTML="💖";
- document.body.appendChild(h);
-}
-</script>
-
 <!-- LOCK -->
 <div class="card" id="lock">
   <h1>🧸 Teddy Day</h1>
-  <p>For someone special</p>
   <input id="pass" placeholder="Enter password">
   <button onclick="unlock()">Unlock</button>
 </div>
 
 <!-- SHOP -->
 <div class="card" id="shop" style="display:none">
-  <button class="back" onclick="goBack()">⬅ Back</button>
+  <button class="back" onclick="goBack()">⬅</button>
+
   <div class="teddy" id="teddy">🧸</div>
-  <h1>Choose a Teddy</h1>
+  <p>(Tap, Double-tap or Hold me 😄)</p>
 
   <div class="grid">
     <div class="item" onclick="buy(0)">🧸 Pink Teddy</div>
@@ -171,16 +148,15 @@ function unlock(){
  if(pass.value==="piya"){
    lock.style.display="none";
    shop.style.display="block";
- }
- else alert("Wrong password 😅");
+ } else alert("Wrong password 😅");
 }
 
 function buy(i){
- teddy.classList.add("hug");
  showCinema(lines[i]);
  setTimeout(endScene,4500);
 }
 
+/* CINEMA */
 function showCinema(text){
  cinema.style.display="flex";
  subtitle.innerHTML="";
@@ -191,17 +167,55 @@ function showCinema(text){
    if(i>=text.length)clearInterval(t);
  },40);
 }
-
 function endScene(){
  cinema.style.display="none";
  document.body.classList.add("night");
- alert("🧸 Delivered to you 💌\nHappy Teddy Day!");
+ alert("🧸 Delivered to you 💌");
 }
-
 function goBack(){
  shop.style.display="none";
  lock.style.display="block";
  document.body.classList.remove("night");
+}
+
+/* TALKING TEDDY LOGIC */
+let tapTimer, holdTimer;
+
+teddy.addEventListener("click",()=>{
+  teddy.innerText="😭";
+  teddy.classList.add("shake");
+  setTimeout(()=>{teddy.innerText="🧸";teddy.classList.remove("shake")},600);
+});
+
+teddy.addEventListener("dblclick",()=>{
+  teddy.innerText="😄";
+  spawnEmoji("💖");
+  setTimeout(()=>teddy.innerText="🧸",800);
+});
+
+teddy.addEventListener("touchstart",()=>{
+  holdTimer=setTimeout(()=>{
+    teddy.classList.add("hug");
+    teddy.innerText="🥰";
+    spawnEmoji("💞");
+  },800);
+});
+teddy.addEventListener("touchend",()=>{
+  clearTimeout(holdTimer);
+  setTimeout(()=>{
+    teddy.classList.remove("hug");
+    teddy.innerText="🧸";
+  },800);
+});
+
+function spawnEmoji(e){
+  let em=document.createElement("div");
+  em.className="emoji";
+  em.innerText=e;
+  em.style.left="50%";
+  em.style.bottom="50%";
+  document.body.appendChild(em);
+  setTimeout(()=>em.remove(),2000);
 }
 </script>
 
