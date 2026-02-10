@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,93 +8,109 @@
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{
-  margin:0;min-height:100vh;
-  background:linear-gradient(270deg,#ff9a9e,#fad0c4,#ffd1ff);
-  background-size:600% 600%;
-  animation:bg 12s ease infinite;
-  display:flex;justify-content:center;align-items:center;
-  overflow:hidden;
+ margin:0;min-height:100vh;
+ background:linear-gradient(270deg,#ff9a9e,#fad0c4,#ffd1ff);
+ background-size:600% 600%;
+ animation:bg 12s ease infinite;
+ display:flex;justify-content:center;align-items:center;
+ overflow:hidden;
 }
 @keyframes bg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
 
 .card{
-  width:92%;max-width:420px;
-  background:rgba(255,255,255,.2);
-  backdrop-filter:blur(16px);
-  border-radius:24px;
-  padding:24px;text-align:center;
-  color:#fff;
-  box-shadow:0 20px 40px rgba(0,0,0,.3);
-  animation:pop .6s ease;
+ width:92%;max-width:420px;
+ background:rgba(255,255,255,.2);
+ backdrop-filter:blur(16px);
+ border-radius:24px;
+ padding:24px;text-align:center;
+ color:#fff;
+ box-shadow:0 20px 40px rgba(0,0,0,.3);
+ animation:pop .6s ease;
 }
 @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 
 button{
-  padding:12px 24px;border:none;border-radius:30px;
-  background:linear-gradient(135deg,#ff4d6d,#ff758f);
-  color:#fff;font-size:16px;cursor:pointer;
+ padding:12px 24px;border:none;border-radius:30px;
+ background:linear-gradient(135deg,#ff4d6d,#ff758f);
+ color:#fff;font-size:16px;cursor:pointer;
 }
+
 input{
-  padding:12px;width:80%;border-radius:30px;border:none;
-  text-align:center;font-size:16px;margin:12px 0
+ padding:12px;width:80%;border-radius:30px;border:none;
+ text-align:center;font-size:16px;margin:12px 0
 }
 
 /* TEDDY */
 .teddy{
-  font-size:90px;
-  user-select:none;
-  cursor:pointer;
-  animation:walk 2.5s ease forwards;
+ font-size:90px;
+ cursor:pointer;
+ user-select:none;
+ animation:walk 2s ease forwards;
 }
-@keyframes walk{
-  from{transform:translateX(-120px)}
-  to{transform:translateX(0)}
-}
+@keyframes walk{from{transform:translateX(-120px)}to{transform:translateX(0)}}
 .shake{animation:shake .4s}
 @keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  50%{transform:translateX(8px)}
-  75%{transform:translateX(-8px)}
-  100%{transform:translateX(0)}
+ 0%{transform:translateX(0)}
+ 25%{transform:translateX(-8px)}
+ 50%{transform:translateX(8px)}
+ 75%{transform:translateX(-8px)}
+ 100%{transform:translateX(0)}
 }
 .hug{animation:hug .6s infinite alternate}
 @keyframes hug{from{transform:scale(1)}to{transform:scale(1.1)}}
 
-/* EMOJI FLOAT */
-.emoji{
-  position:fixed;
-  font-size:24px;
-  animation:floatUp 2s ease forwards;
-}
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120px);opacity:0}
-}
+/* Mood */
+.mood{margin:8px 0;font-size:20px}
 
 /* Grid */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
 .item{
-  background:rgba(255,255,255,.25);
-  border-radius:20px;
-  padding:16px;
-  cursor:pointer;
-  transition:.3s;
+ background:rgba(255,255,255,.25);
+ border-radius:20px;
+ padding:16px;
+ cursor:pointer;
+ transition:.3s;
 }
 .item:hover{transform:translateY(-6px) scale(1.05)}
 
+/* Emoji */
+.emoji{
+ position:fixed;font-size:24px;
+ animation:floatUp 2s ease forwards;
+}
+@keyframes floatUp{
+ from{transform:translateY(0);opacity:1}
+ to{transform:translateY(-120px);opacity:0}
+}
+
 /* Cinema */
 .cinema{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  justify-content:center;align-items:flex-end;
-  padding:30px;
+ position:fixed;inset:0;
+ background:rgba(0,0,0,.85);
+ display:none;
+ justify-content:center;align-items:flex-end;
+ padding:30px;
 }
 .subtitle{color:#fff;font-size:18px;text-align:center}
 
-/* Night */
-.night{background:linear-gradient(#020024,#090979,#000)}
+/* Delivery */
+.delivery{
+ display:none;text-align:left;
+ background:rgba(0,0,0,.4);
+ padding:16px;border-radius:16px;margin-top:12px;
+}
+
+/* Credits */
+.credits{
+ display:none;
+ position:fixed;inset:0;
+ background:black;color:white;
+ justify-content:center;align-items:center;
+ text-align:center;
+ animation:fade 2s ease;
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
 .back{position:absolute;top:12px;left:12px}
 
 </style>
@@ -105,117 +120,148 @@ input{
 
 <!-- LOCK -->
 <div class="card" id="lock">
-  <h1>🧸 Teddy Day</h1>
-  <input id="pass" placeholder="Enter password">
-  <button onclick="unlock()">Unlock</button>
+ <h1>🧸 Teddy Day</h1>
+ <input id="pass" placeholder="Enter password">
+ <button onclick="unlock()">Unlock</button>
 </div>
 
 <!-- SHOP -->
 <div class="card" id="shop" style="display:none">
-  <button class="back" onclick="goBack()">⬅</button>
+ <button class="back" onclick="goBack()">⬅</button>
 
-  <div class="teddy" id="teddy">🧸</div>
-  <p>(Tap, Double-tap or Hold me 😄)</p>
+ <div class="teddy" id="teddy">🧸</div>
+ <div class="mood" id="mood">Mood: ❤️❤️❤️🤍🤍</div>
+ <p>(Tap / Double tap / Hold)</p>
 
-  <div class="grid">
-    <div class="item" onclick="buy(0)">🧸 Pink Teddy</div>
-    <div class="item" onclick="buy(1)">🐻 Brown Teddy</div>
-    <div class="item" onclick="buy(2)">🧸 Cute Teddy</div>
-    <div class="item" onclick="buy(3)">🐻 Soft Teddy</div>
-    <div class="item" onclick="buy(4)">🧸 Mini Teddy</div>
-    <div class="item" onclick="buy(5)">🐻 Fluffy Teddy</div>
-    <div class="item" onclick="buy(6)">🧸 Special Teddy</div>
-  </div>
+ <div class="grid">
+  <div class="item" onclick="buy(0)">🧸 Pink Teddy</div>
+  <div class="item" onclick="buy(1)">🐻 Brown Teddy</div>
+  <div class="item" onclick="buy(2)">🧸 Cute Teddy</div>
+  <div class="item" onclick="buy(3)">🐻 Soft Teddy</div>
+  <div class="item" onclick="buy(4)">🧸 Mini Teddy</div>
+  <div class="item" onclick="buy(5)">🐻 Fluffy Teddy</div>
+  <div class="item" onclick="buy(6)">🧸 Special Teddy</div>
+ </div>
+
+ <div class="delivery" id="delivery">
+  📦 Packed<br>
+  🚚 Out for delivery<br>
+  💌 Delivered to you
+ </div>
 </div>
 
 <!-- CINEMA -->
 <div class="cinema" id="cinema">
-  <div class="subtitle" id="subtitle"></div>
+ <div class="subtitle" id="subtitle"></div>
+</div>
+
+<!-- CREDITS -->
+<div class="credits" id="credits">
+ <div>
+  <h1>🎬 The End</h1>
+  <p>Starring: You & Teddy 🧸</p>
+  <p>Directed by Destiny 💖</p>
+ </div>
 </div>
 
 <script>
+let mood=3,hugs=0,kisses=0;
+
 const lines=[
- "Filmon mein teddy sirf gift hota hai… yahan emotion hai 😌",
- "Hero entry nahi hai, par teddy full attitude mein hai 😎",
- "Ye teddy hai, warranty ke saath cuteness free 🧸",
- "Bollywood logic: teddy diya toh smile guaranteed 😄",
- "Is teddy ko hug kiya toh stress refund milta hai 😜",
- "Ye scene romantic nahi… comfortable hai 💕",
- "Delivery thodi late hai, par feeling on time hai ❤️"
+ "Ye teddy cute nahi… dangerous level ka cute hai 😄",
+ "Filmy nahi hai, par feeling full HD hai 💕",
+ "Is teddy ke saath mood auto-refresh hota hai 😌",
+ "Bollywood mein nahi, dil mein entry hui hai 🧸",
+ "Warning: Hug overdose possible 😜",
+ "Ye teddy return nahi hoga… dil mein settle ho gaya ❤️",
+ "Special teddy for special smile 😊"
 ];
 
 function unlock(){
  if(pass.value==="piya"){
-   lock.style.display="none";
-   shop.style.display="block";
+  lock.style.display="none";
+  shop.style.display="block";
  } else alert("Wrong password 😅");
+}
+
+function updateMood(){
+ mood=Math.max(0,Math.min(5,mood));
+ moodEl="Mood: "+"❤️".repeat(mood)+"🤍".repeat(5-mood);
+ document.getElementById("mood").innerText=moodEl;
 }
 
 function buy(i){
  showCinema(lines[i]);
- setTimeout(endScene,4500);
 }
 
-/* CINEMA */
 function showCinema(text){
  cinema.style.display="flex";
  subtitle.innerHTML="";
  let i=0;
  let t=setInterval(()=>{
-   subtitle.innerHTML+=text.charAt(i);
-   i++;
-   if(i>=text.length)clearInterval(t);
+  subtitle.innerHTML+=text.charAt(i);
+  i++; if(i>=text.length)clearInterval(t);
  },40);
+ setTimeout(()=>{
+  cinema.style.display="none";
+ checkUnlock();
+ },3500);
 }
-function endScene(){
- cinema.style.display="none";
- document.body.classList.add("night");
- alert("🧸 Delivered to you 💌");
+
+function checkUnlock(){
+ if(hugs>=3 && kisses>=2){
+  document.getElementById("delivery").style.display="block";
+  setTimeout(()=>{
+   document.getElementById("credits").style.display="flex";
+  },2500);
+ }
 }
+
 function goBack(){
  shop.style.display="none";
  lock.style.display="block";
- document.body.classList.remove("night");
 }
 
-/* TALKING TEDDY LOGIC */
-let tapTimer, holdTimer;
+let holdTimer;
 
-teddy.addEventListener("click",()=>{
-  teddy.innerText="😭";
-  teddy.classList.add("shake");
-  setTimeout(()=>{teddy.innerText="🧸";teddy.classList.remove("shake")},600);
-});
+teddy.onclick=()=>{
+ teddy.innerText="😭";
+ mood--;updateMood();
+ teddy.classList.add("shake");
+ setTimeout(()=>{teddy.innerText="🧸";teddy.classList.remove("shake")},600);
+};
 
-teddy.addEventListener("dblclick",()=>{
-  teddy.innerText="😄";
-  spawnEmoji("💖");
-  setTimeout(()=>teddy.innerText="🧸",800);
-});
+teddy.ondblclick=()=>{
+ teddy.innerText="😄";
+ kisses++; mood++; updateMood();
+ spawn("💖");
+ setTimeout(()=>teddy.innerText="🧸",800);
+};
 
 teddy.addEventListener("touchstart",()=>{
-  holdTimer=setTimeout(()=>{
-    teddy.classList.add("hug");
-    teddy.innerText="🥰";
-    spawnEmoji("💞");
-  },800);
+ holdTimer=setTimeout(()=>{
+  teddy.innerText="🥰";
+  teddy.classList.add("hug");
+  hugs++; mood++; updateMood();
+  spawn("💞");
+ },800);
 });
 teddy.addEventListener("touchend",()=>{
-  clearTimeout(holdTimer);
-  setTimeout(()=>{
-    teddy.classList.remove("hug");
-    teddy.innerText="🧸";
-  },800);
+ clearTimeout(holdTimer);
+ setTimeout(()=>{
+  teddy.innerText="🧸";
+  teddy.classList.remove("hug");
+ },600);
 });
 
-function spawnEmoji(e){
-  let em=document.createElement("div");
-  em.className="emoji";
-  em.innerText=e;
-  em.style.left="50%";
-  em.style.bottom="50%";
-  document.body.appendChild(em);
-  setTimeout(()=>em.remove(),2000);
+function spawn(e){
+ let em=document.createElement("div");
+ em.className="emoji";
+ em.innerText=e;
+ em.style.left="50%";
+ em.style.bottom="50%";
+ document.body.appendChild(em);
+ setTimeout(()=>em.remove(),2000);
 }
 </script>
 
