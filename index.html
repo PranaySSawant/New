@@ -9,45 +9,67 @@
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{
   margin:0;min-height:100vh;
-  background:linear-gradient(270deg,#ff758f,#ff7eb3,#c77dff);
-  background-size:600% 600%;
-  animation:bg 12s ease infinite;
+  background:radial-gradient(circle at top,#ff9a9e,#fad0c4,#c77dff);
+  animation:bgMove 15s ease infinite;
   display:flex;justify-content:center;align-items:center;
   overflow:hidden;
 }
-@keyframes bg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+@keyframes bgMove{
+  0%{background-position:0% 0%}
+  50%{background-position:100% 100%}
+  100%{background-position:0% 0%}
+}
+
+/* PARTICLES */
+.particle{
+  position:fixed;
+  font-size:14px;
+  animation:particle 4s linear infinite;
+  opacity:.7;
+}
+@keyframes particle{
+  from{transform:translateY(100vh);opacity:0}
+  to{transform:translateY(-10vh);opacity:1}
+}
 
 .card{
   width:92%;max-width:430px;
   background:rgba(255,255,255,.18);
-  backdrop-filter:blur(18px);
-  border-radius:26px;
-  padding:24px;text-align:center;
+  backdrop-filter:blur(20px);
+  border-radius:30px;
+  padding:26px;text-align:center;
   color:#fff;
-  box-shadow:0 25px 50px rgba(0,0,0,.35);
-  animation:pop .6s ease;
+  box-shadow:0 30px 60px rgba(0,0,0,.4);
+  animation:cardIn .8s ease;
 }
-@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes cardIn{
+  from{transform:scale(.85) translateY(40px);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 
 button{
-  padding:12px 26px;border:none;border-radius:30px;
+  padding:14px 30px;border:none;border-radius:30px;
   background:linear-gradient(135deg,#ff4d6d,#ff758f);
   color:#fff;font-size:16px;cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 input{
-  padding:12px;width:80%;border-radius:30px;border:none;
-  text-align:center;font-size:16px;margin:12px 0
+  padding:14px;width:80%;border-radius:30px;border:none;
+  text-align:center;font-size:16px;margin:14px 0
 }
-.back{position:absolute;top:12px;left:12px}
+.back{position:absolute;top:14px;left:14px}
 
 /* TEDDY */
 .teddy{
-  font-size:92px;
-  user-select:none;
+  font-size:96px;
   cursor:pointer;
-  animation:walk 2.5s ease forwards;
+  animation:enter 2s ease, breathe 3s infinite;
 }
-@keyframes walk{from{transform:translateX(-120px)}to{transform:translateX(0)}}
+@keyframes enter{from{transform:translateX(-150px)}to{transform:translateX(0)}}
+@keyframes breathe{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+}
 .shake{animation:shake .4s}
 @keyframes shake{
   0%{transform:translateX(0)}
@@ -57,59 +79,62 @@ input{
   100%{transform:translateX(0)}
 }
 .hug{animation:hug .6s infinite alternate}
-@keyframes hug{from{transform:scale(1)}to{transform:scale(1.12)}}
-.idle{animation:idle 3s infinite}
-@keyframes idle{
-  0%,100%{transform:rotate(0deg)}
-  50%{transform:rotate(2deg)}
-}
+@keyframes hug{from{transform:scale(1)}to{transform:scale(1.15)}}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
 .item{
-  background:rgba(255,255,255,.25);
-  border-radius:20px;
-  padding:16px;
+  background:rgba(255,255,255,.28);
+  border-radius:22px;
+  padding:18px;
   cursor:pointer;
-  transition:.3s;
+  transition:.35s;
 }
-.item:hover{transform:translateY(-6px) scale(1.05)}
+.item:hover{
+  transform:translateY(-8px) scale(1.08);
+  box-shadow:0 10px 30px rgba(0,0,0,.4)
+}
 
 /* CINEMA */
 .cinema{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.9);
+  background:radial-gradient(circle,#000,#000);
   display:none;
-  justify-content:center;align-items:flex-end;
-  padding:30px;
+  justify-content:center;align-items:center;
+  animation:zoomIn 1.5s ease;
+}
+@keyframes zoomIn{
+  from{transform:scale(1.4);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 .subtitle{
   color:#fff;
-  font-size:18px;
+  font-size:20px;
+  max-width:80%;
   text-align:center;
-  min-height:90px;
-  animation:fadeUp 1s;
+  line-height:1.6;
+  animation:textGlow 2s infinite alternate;
 }
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
+@keyframes textGlow{
+  from{text-shadow:0 0 10px #ff758f}
+  to{text-shadow:0 0 25px #ffd1ff}
 }
 
-/* NIGHT MODE */
+/* NIGHT */
 .night{
   background:linear-gradient(#020024,#090979,#000);
   animation:none;
 }
 
-/* FLOAT EMOJI */
+/* FLOAT */
 .emoji{
   position:fixed;
-  font-size:26px;
-  animation:floatUp 2s ease forwards;
+  font-size:28px;
+  animation:floatUp 2.5s ease forwards;
 }
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-140px);opacity:0}
+  to{transform:translateY(-160px);opacity:0}
 }
 </style>
 </head>
@@ -127,7 +152,7 @@ input{
 <div class="card" id="shop" style="display:none">
   <button class="back" onclick="restart()">⬅</button>
 
-  <div class="teddy idle" id="teddy">🧸</div>
+  <div class="teddy" id="teddy">🧸</div>
   <p id="mood">Mood: Normal 😐</p>
 
   <h3>Choose a filmy promise 🎬</h3>
@@ -146,10 +171,10 @@ input{
 
 <script>
 const scenes=[
- "SRK mode 💖: Vaada aisa karo jo WiFi jaisa ho – hamesha connected 😄",
- "Ranveer style 😎: Promise hai drama kam, swag full!",
- "Ayushmann vibes 😊: Simple promise – tum hanso, main hero ban jaun 😜",
- "Salman style 🔥: Ek baar promise kar diya… toh back button bhi kaam karega 😂"
+ "SRK 💖: Vaada aisa ho jo buffering ke bina chale 😄",
+ "Ranveer 😎: Promise hai drama kam, swag unlimited!",
+ "Ayushmann 😊: Simple sa vaada – hamesha saath.",
+ "Salman 🔥: Ek baar promise… replay allowed 😂"
 ];
 
 let mood="Normal 😐";
@@ -159,12 +184,12 @@ function unlock(){
  if(pass.value==="piya"){
   lock.style.display="none";
   shop.style.display="block";
+  spawnParticles();
   resetIdle();
  } else alert("Wrong password 😅");
 }
 
 function scene(i){
- teddy.classList.remove("idle");
  teddy.classList.add("hug");
  mood="Loved 🥰";
  moodUpdate();
@@ -180,13 +205,13 @@ function showCinema(text){
   subtitle.innerHTML+=text.charAt(i);
   i++;
   if(i>=text.length)clearInterval(t);
- },40);
+ },35);
 }
 
 function endScene(){
  cinema.style.display="none";
  document.body.classList.add("night");
- spawn("🎬");
+ confetti();
  setTimeout(()=>{
    if(confirm("💍 Promise delivered 💌\nReplay again?")){
      restart();
@@ -203,7 +228,7 @@ function restart(){
  moodUpdate();
 }
 
-/* TEDDY INTERACTIONS */
+/* TEDDY */
 teddy.onclick=()=>{
  mood="Happy 😄";
  teddy.classList.add("shake");
@@ -212,7 +237,6 @@ teddy.onclick=()=>{
  moodUpdate();
  resetIdle();
 };
-
 teddy.ondblclick=()=>{
  mood="Extra Loved 🥰🥰";
  teddy.classList.add("hug");
@@ -220,28 +244,44 @@ teddy.ondblclick=()=>{
  moodUpdate();
 };
 
-/* IDLE SAD */
+/* IDLE */
 function resetIdle(){
  clearTimeout(idleTimer);
  idleTimer=setTimeout(()=>{
-  mood="Ignore mat karo 😢";
+  mood="Miss me 😢";
   spawn("😢");
   moodUpdate();
- },7000);
+ },8000);
 }
 
 function moodUpdate(){
  document.getElementById("mood").innerText="Mood: "+mood;
 }
 
+/* EFFECTS */
 function spawn(e){
  let em=document.createElement("div");
  em.className="emoji";
  em.innerText=e;
- em.style.left="50%";
+ em.style.left=Math.random()*100+"%";
  em.style.bottom="50%";
  document.body.appendChild(em);
- setTimeout(()=>em.remove(),2000);
+ setTimeout(()=>em.remove(),2500);
+}
+
+function spawnParticles(){
+ setInterval(()=>{
+  let p=document.createElement("div");
+  p.className="particle";
+  p.innerText=["✨","💖","💍","💞"][Math.floor(Math.random()*4)];
+  p.style.left=Math.random()*100+"%";
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),4000);
+ },800);
+}
+
+function confetti(){
+ for(let i=0;i<20;i++) spawn("🎉");
 }
 </script>
 
