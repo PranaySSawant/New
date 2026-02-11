@@ -58,6 +58,11 @@ input{
 }
 .hug{animation:hug .6s infinite alternate}
 @keyframes hug{from{transform:scale(1)}to{transform:scale(1.12)}}
+.idle{animation:idle 3s infinite}
+@keyframes idle{
+  0%,100%{transform:rotate(0deg)}
+  50%{transform:rotate(2deg)}
+}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
@@ -73,15 +78,28 @@ input{
 /* CINEMA */
 .cinema{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.88);
+  background:rgba(0,0,0,.9);
   display:none;
   justify-content:center;align-items:flex-end;
   padding:30px;
 }
-.subtitle{color:#fff;font-size:18px;text-align:center;min-height:70px}
+.subtitle{
+  color:#fff;
+  font-size:18px;
+  text-align:center;
+  min-height:90px;
+  animation:fadeUp 1s;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-/* NIGHT */
-.night{background:linear-gradient(#020024,#090979,#000)}
+/* NIGHT MODE */
+.night{
+  background:linear-gradient(#020024,#090979,#000);
+  animation:none;
+}
 
 /* FLOAT EMOJI */
 .emoji{
@@ -109,7 +127,7 @@ input{
 <div class="card" id="shop" style="display:none">
   <button class="back" onclick="restart()">⬅</button>
 
-  <div class="teddy" id="teddy">🧸</div>
+  <div class="teddy idle" id="teddy">🧸</div>
   <p id="mood">Mood: Normal 😐</p>
 
   <h3>Choose a filmy promise 🎬</h3>
@@ -117,6 +135,7 @@ input{
     <div class="item" onclick="scene(0)">SRK 💖</div>
     <div class="item" onclick="scene(1)">Ranveer 😎</div>
     <div class="item" onclick="scene(2)">Ayushmann 😊</div>
+    <div class="item" onclick="scene(3)">Salman 🔥</div>
   </div>
 </div>
 
@@ -127,9 +146,10 @@ input{
 
 <script>
 const scenes=[
- "SRK mode on 💖: Vaada sirf shabd nahi… feeling hoti hai.",
- "Ranveer style 😎: Promise hai drama kam, masti full!",
- "Ayushmann vibes 😊: Simple sa vaada… hamesha saath."
+ "SRK mode 💖: Vaada aisa karo jo WiFi jaisa ho – hamesha connected 😄",
+ "Ranveer style 😎: Promise hai drama kam, swag full!",
+ "Ayushmann vibes 😊: Simple promise – tum hanso, main hero ban jaun 😜",
+ "Salman style 🔥: Ek baar promise kar diya… toh back button bhi kaam karega 😂"
 ];
 
 let mood="Normal 😐";
@@ -139,12 +159,12 @@ function unlock(){
  if(pass.value==="piya"){
   lock.style.display="none";
   shop.style.display="block";
-  autoTalk();
   resetIdle();
  } else alert("Wrong password 😅");
 }
 
 function scene(i){
+ teddy.classList.remove("idle");
  teddy.classList.add("hug");
  mood="Loved 🥰";
  moodUpdate();
@@ -166,11 +186,12 @@ function showCinema(text){
 function endScene(){
  cinema.style.display="none";
  document.body.classList.add("night");
+ spawn("🎬");
  setTimeout(()=>{
    if(confirm("💍 Promise delivered 💌\nReplay again?")){
      restart();
    }
- },500);
+ },700);
 }
 
 function restart(){
@@ -186,38 +207,31 @@ function restart(){
 teddy.onclick=()=>{
  mood="Happy 😄";
  teddy.classList.add("shake");
- spawn("💖");
+ spawn("😂");
  setTimeout(()=>teddy.classList.remove("shake"),400);
  moodUpdate();
  resetIdle();
 };
 
 teddy.ondblclick=()=>{
- mood="Loved 🥰";
+ mood="Extra Loved 🥰🥰";
  teddy.classList.add("hug");
  spawn("💞");
  moodUpdate();
 };
 
-function moodUpdate(){
- document.getElementById("mood").innerText="Mood: "+mood;
-}
-
-/* AUTO TALK */
-function autoTalk(){
- setInterval(()=>{
-  spawn("💬");
- },8000);
-}
-
 /* IDLE SAD */
 function resetIdle(){
  clearTimeout(idleTimer);
  idleTimer=setTimeout(()=>{
-  mood="Sad 😢";
+  mood="Ignore mat karo 😢";
   spawn("😢");
   moodUpdate();
- },6000);
+ },7000);
+}
+
+function moodUpdate(){
+ document.getElementById("mood").innerText="Mood: "+mood;
 }
 
 function spawn(e){
