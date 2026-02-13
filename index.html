@@ -65,6 +65,8 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   75%{transform:translateX(-6px)}
   100%{transform:translateX(0)}
 }
+.hug{animation:hug .7s infinite alternate}
+@keyframes hug{from{transform:scale(1)}to{transform:scale(1.12)}}
 
 .msg{
   margin:14px 0;
@@ -103,7 +105,10 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   transition:1s;
 }
 
-.night{background:radial-gradient(circle at top,#1b1f3b,#000);}
+.night{
+  background:radial-gradient(circle at top,#1b1f3b,#000);
+}
+
 .footer{font-size:.8rem;opacity:.8;margin-top:8px}
 </style>
 </head>
@@ -111,7 +116,7 @@ h1{font-size:2.1rem;margin-bottom:8px;}
 <body>
 
 <script>
-for(let i=0;i<30;i++){
+for(let i=0;i<25;i++){
   let h=document.createElement("div");
   h.className="heart";
   h.innerHTML="❤️";
@@ -128,15 +133,20 @@ for(let i=0;i<30;i++){
   <div class="teddy" id="teddy">🧸</div>
   <div class="msg" id="msg">Tap teddy… magic loading ✨</div>
 
-  <div class="meter">
-    <div class="fill" id="fill"></div>
-  </div>
+  <div class="meter"><div class="fill" id="fill"></div></div>
 
-  <button class="btn" onclick="loveMeter()">💖 Check Love Meter</button>
+  <button class="btn" onclick="loveMeter()">💖 Love Meter</button>
   <button class="btn" onclick="scene(0)">🎬 Romantic</button>
   <button class="btn" onclick="scene(1)">😂 Comedy</button>
   <button class="btn" onclick="scene(2)">🎭 Drama</button>
-  <button class="btn" onclick="nightMode()">🌙 Cinematic Ending</button>
+
+  <button class="btn" onclick="startProposal()">💍 Proposal Mode</button>
+
+  <div id="proposal" style="display:none;margin-top:10px">
+    <button class="btn" onclick="acceptLove()">YES ❤️</button>
+    <button class="btn" id="noBtn">NO 🙈</button>
+  </div>
+
   <button class="btn" onclick="reset()">🔁 Replay</button>
 
   <div class="footer">Made with ❤️ + full masti</div>
@@ -147,6 +157,7 @@ const teddy=document.getElementById("teddy");
 const msg=document.getElementById("msg");
 const fill=document.getElementById("fill");
 
+let interactions=0;
 let lastDialog=-1;
 
 const dialogues=[
@@ -158,9 +169,14 @@ const dialogues=[
 ];
 
 const scenes=[
-"Romantic 💕: Tum ho toh ending bhi perfect.",
-"Comedy 😂: Hum thode cute cartoon hain.",
-"Drama 🎭: Pehle hug, phir baat 🤗"
+"Chapter 1 💕: Pehli smile… pehla magic.",
+"Chapter 2 😂: Thodi masti, thoda pyaar.",
+"Chapter 3 🎭: Dil serious ho gaya."
+];
+
+const proposalLines=[
+"Dil se pooch raha hoon… ❤️",
+"Will you be mine forever? 💍"
 ];
 
 function randomDialog(){
@@ -170,23 +186,64 @@ function randomDialog(){
   return dialogues[i];
 }
 
+/* Teddy AI */
 teddy.onclick=()=>{
+  interactions++;
   teddy.className="teddy shake";
   msg.innerHTML=randomDialog();
+
+  if(interactions===7){
+    document.body.classList.add("night");
+    msg.innerHTML="You weren’t planned… you were destiny ✨";
+  }
+
   setTimeout(()=>teddy.className="teddy",400);
 };
 
 function loveMeter(){
+  interactions++;
   let v=Math.floor(Math.random()*30)+70;
   fill.style.width=v+"%";
-  msg.innerHTML=`Love Level ${v}% 💖`;
+  msg.innerHTML=`Love Level ${v}% 💖 ${v>90?"Too much love 😌":"Perfect match 😄"}`;
 }
 
-function scene(i){msg.innerHTML=scenes[i];}
-function nightMode(){document.body.classList.add("night");}
+function scene(i){
+  interactions++;
+  msg.innerHTML=scenes[i];
+}
+
+/* Proposal Mode */
+function startProposal(){
+  msg.innerHTML=proposalLines[0];
+  document.getElementById("proposal").style.display="block";
+}
+
+function acceptLove(){
+  msg.innerHTML="She said YES!!! 💖🥹";
+  teddy.classList.add("hug");
+  heartBlast();
+}
+
+document.getElementById("noBtn").onmouseover=function(){
+  this.style.position="absolute";
+  this.style.left=Math.random()*80+"%";
+  this.style.top=Math.random()*80+"%";
+};
+
+function heartBlast(){
+  for(let i=0;i<20;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize="26px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+}
+
 function reset(){location.reload();}
 </script>
 
 </body>
 </html>
-
