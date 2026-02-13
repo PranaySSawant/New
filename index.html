@@ -1,3 +1,4 @@
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +36,7 @@ body{
   width:92%;
   max-width:420px;
   background:rgba(255,255,255,.18);
-  backdrop-filter:blur(14px);
+  backdrop-filter:blur(16px);
   border-radius:28px;
   padding:25px;
   text-align:center;
@@ -45,7 +46,7 @@ body{
 }
 @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
 
-h1{font-size:2.1rem;margin-bottom:8px;}
+h1{font-size:2.1rem;}
 .name{font-weight:bold;text-shadow:0 0 12px #fff;}
 
 .teddy{
@@ -66,7 +67,7 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   100%{transform:translateX(0)}
 }
 .hug{animation:hug .7s infinite alternate}
-@keyframes hug{from{transform:scale(1)}to{transform:scale(1.12)}}
+@keyframes hug{from{transform:scale(1)}to{transform:scale(1.15)}}
 
 .msg{
   margin:14px 0;
@@ -96,7 +97,6 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   background:rgba(255,255,255,.3);
   border-radius:20px;
   overflow:hidden;
-  margin:8px 0;
 }
 .fill{
   height:100%;
@@ -105,11 +105,35 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   transition:1s;
 }
 
-.night{
-  background:radial-gradient(circle at top,#1b1f3b,#000);
-}
-
+.night{background:radial-gradient(circle at top,#1b1f3b,#000);}
 .footer{font-size:.8rem;opacity:.8;margin-top:8px}
+
+/* Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.overlay-box{
+  text-align:center;
+  color:#fff;
+  max-width:320px;
+}
+.choice-btn{
+  margin-top:12px;
+  padding:12px;
+  border:none;
+  width:100%;
+  border-radius:30px;
+  font-size:1rem;
+  cursor:pointer;
+}
+.love-btn{background:linear-gradient(135deg,#ff4d6d,#ff9a9e)}
+.destiny-btn{background:linear-gradient(135deg,#6a85b6,#bac8e0)}
 </style>
 </head>
 
@@ -142,93 +166,89 @@ for(let i=0;i<25;i++){
 
   <button class="btn" onclick="startProposal()">💍 Proposal Mode</button>
 
-  <div id="proposal" style="display:none;margin-top:10px">
+  <div id="proposal" style="display:none">
     <button class="btn" onclick="acceptLove()">YES ❤️</button>
     <button class="btn" id="noBtn">NO 🙈</button>
   </div>
 
   <button class="btn" onclick="reset()">🔁 Replay</button>
-
   <div class="footer">Made with ❤️ + full masti</div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-box">
+    <div id="finalText"></div>
+    <button class="choice-btn love-btn" onclick="chooseLove()">❤️ Choose Love</button>
+  </div>
 </div>
 
 <script>
 const teddy=document.getElementById("teddy");
 const msg=document.getElementById("msg");
 const fill=document.getElementById("fill");
-
-let interactions=0;
-let lastDialog=-1;
+const noBtn=document.getElementById("noBtn");
 
 const dialogues=[
-"Tum smile karti ho aur duniya pause ho jaati hai 😍",
-"Tum meri favourite notification ho 📱❤️",
-"Chocolate bhi tumse kam sweet lagti hai 🍫",
-"Tum ho toh sab scene hit lagta hai 🎬",
-"Tum meri forever wali feeling ho 💕"
+"Tum meri favourite habit ho 😍",
+"Tum ho toh life HD lagti hai 🎬",
+"Tum smile karti ho aur logic fail ho jaata hai 😂",
+"Tum meri permanent feeling ho 💖",
+"Shortcut mein bolu? Dil tumhara hai ❤️"
 ];
 
 const scenes=[
-"Chapter 1 💕: Pehli smile… pehla magic.",
-"Chapter 2 😂: Thodi masti, thoda pyaar.",
-"Chapter 3 🎭: Dil serious ho gaya."
+"Romantic Scene 🎥: Dil softly background music pe aa gaya.",
+"Comedy Scene 😂: Dil has raha hai bina joke ke.",
+"Drama Scene 🎭: Dil bol raha – bas wahi chahiye."
 ];
 
-const proposalLines=[
-"Dil se pooch raha hoon… ❤️",
-"Will you be mine forever? 💍"
-];
+let proposalTimer;
 
-function randomDialog(){
-  let i;
-  do{i=Math.floor(Math.random()*dialogues.length);}while(i===lastDialog);
-  lastDialog=i;
-  return dialogues[i];
-}
-
-/* Teddy AI */
 teddy.onclick=()=>{
-  interactions++;
   teddy.className="teddy shake";
-  msg.innerHTML=randomDialog();
-
-  if(interactions===7){
-    document.body.classList.add("night");
-    msg.innerHTML="You weren’t planned… you were destiny ✨";
-  }
-
+  msg.innerHTML=dialogues[Math.floor(Math.random()*dialogues.length)];
   setTimeout(()=>teddy.className="teddy",400);
 };
 
 function loveMeter(){
-  interactions++;
-  let v=Math.floor(Math.random()*30)+70;
+  let v=Math.floor(Math.random()*20)+80;
   fill.style.width=v+"%";
-  msg.innerHTML=`Love Level ${v}% 💖 ${v>90?"Too much love 😌":"Perfect match 😄"}`;
+  msg.innerHTML=`Love Level ${v}% 💕 (Certified Real)`;
 }
 
-function scene(i){
-  interactions++;
-  msg.innerHTML=scenes[i];
-}
+function scene(i){msg.innerHTML=scenes[i];}
 
-/* Proposal Mode */
 function startProposal(){
-  msg.innerHTML=proposalLines[0];
+  msg.innerHTML="Final question… ready ho? 😌";
   document.getElementById("proposal").style.display="block";
+
+  // AUTO YES AFTER 5 SECONDS
+  proposalTimer=setTimeout(()=>{
+    acceptLove();
+  },5000);
 }
+
+noBtn.onmouseover=()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*70+"%";
+  noBtn.style.top=Math.random()*70+"%";
+};
 
 function acceptLove(){
-  msg.innerHTML="She said YES!!! 💖🥹";
+  clearTimeout(proposalTimer);
+  document.getElementById("proposal").style.display="none";
+  document.body.classList.add("night");
+  document.getElementById("overlay").style.display="flex";
+  typeText(document.getElementById("finalText"),
+    "Decision locked 🔐\nYou & Me — Endgame ❤️");
   teddy.classList.add("hug");
   heartBlast();
 }
 
-document.getElementById("noBtn").onmouseover=function(){
-  this.style.position="absolute";
-  this.style.left=Math.random()*80+"%";
-  this.style.top=Math.random()*80+"%";
-};
+function chooseLove(){
+  document.getElementById("overlay").style.display="none";
+  msg.innerHTML="NO option existed… but destiny already chose YES 💘";
+}
 
 function heartBlast(){
   for(let i=0;i<20;i++){
@@ -239,6 +259,13 @@ function heartBlast(){
     h.style.fontSize="26px";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
+  }
+}
+
+function typeText(el,text,i=0){
+  if(i<text.length){
+    el.innerHTML+=text.charAt(i);
+    setTimeout(()=>typeText(el,text,i+1),40);
   }
 }
 
