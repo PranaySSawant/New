@@ -65,8 +65,6 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   75%{transform:translateX(-6px)}
   100%{transform:translateX(0)}
 }
-.hug{animation:hug .7s infinite alternate}
-@keyframes hug{from{transform:scale(1)}to{transform:scale(1.12)}}
 
 .msg{
   margin:14px 0;
@@ -105,58 +103,6 @@ h1{font-size:2.1rem;margin-bottom:8px;}
   transition:1s;
 }
 
-/* Memory Grid */
-.memory-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin:12px 0;
-}
-.memory{
-  height:90px;
-  border-radius:14px;
-  overflow:hidden;
-  cursor:pointer;
-}
-.memory img,.memory video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* Story Mode */
-.story{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.story-card{
-  width:90%;
-  max-width:380px;
-  background:#111;
-  border-radius:20px;
-  padding:12px;
-  color:#fff;
-  text-align:center;
-}
-.story-card img,.story-card video{
-  width:100%;
-  border-radius:16px;
-}
-.story-msg{margin:10px 0;}
-.story-btns{display:flex;gap:8px;}
-.story-btns button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-}
-
 .night{background:radial-gradient(circle at top,#1b1f3b,#000);}
 .footer{font-size:.8rem;opacity:.8;margin-top:8px}
 </style>
@@ -180,47 +126,20 @@ for(let i=0;i<30;i++){
   <p>For <span class="name">Piya</span></p>
 
   <div class="teddy" id="teddy">🧸</div>
-  <div class="msg" id="msg">Tap teddy… Valentine magic loading 🎬</div>
+  <div class="msg" id="msg">Tap teddy… magic loading ✨</div>
 
-  <!-- MEMORY GRID -->
-  <div class="memory-grid">
-    <div class="memory" onclick="openStory(0)">
-      <img src="https://photos.app.goo.gl/cHhFNM44aQPfmShA7">
-    </div>
-    <div class="memory" onclick="openStory(1)">
-      <img src="https://photos.app.goo.gl/guh3L2qm8mgcFAmr6">
-    </div>
-    <div class="memory" onclick="openStory(2)">
-      <video muted>
-        <source src="https://photos.app.goo.gl/imqfrUGhHJjc2r7x5">
-      </video>
-    </div>
+  <div class="meter">
+    <div class="fill" id="fill"></div>
   </div>
 
-  <div class="meter"><div5 class="fill" id="fill"></div></div>
   <button class="btn" onclick="loveMeter()">💖 Check Love Meter</button>
-
   <button class="btn" onclick="scene(0)">🎬 Romantic</button>
   <button class="btn" onclick="scene(1)">😂 Comedy</button>
   <button class="btn" onclick="scene(2)">🎭 Drama</button>
-
   <button class="btn" onclick="nightMode()">🌙 Cinematic Ending</button>
   <button class="btn" onclick="reset()">🔁 Replay</button>
 
   <div class="footer">Made with ❤️ + full masti</div>
-</div>
-
-<!-- STORY MODE -->
-<div class="story" id="story">
-  <div class="story-card">
-    <div id="storyMedia"></div>
-    <div class="story-msg" id="storyMsg"></div>
-    <div class="story-btns">
-      <button onclick="prevStory()">⬅</button>
-      <button onclick="closeStory()">❌</button>
-      <button onclick="nextStory()">➡</button>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -228,7 +147,7 @@ const teddy=document.getElementById("teddy");
 const msg=document.getElementById("msg");
 const fill=document.getElementById("fill");
 
-let interactions=0,lastDialog=-1;
+let lastDialog=-1;
 
 const dialogues=[
 "Tum smile karti ho aur duniya pause ho jaati hai 😍",
@@ -239,14 +158,9 @@ const dialogues=[
 ];
 
 const scenes=[
-"Romantic 💕: Ending bhi tum hoti.",
-"Comedy 😂: Hum thode cartoon hain.",
-"Drama 🎭: Pehle hug 🤗"
-];
-
-{type:"img",src:"https://photos.app.goo.gl/cHhFNM44aQPfmShA7",msg:"Yahin se shuru hua tha"},
-{type:"img",src:"https://photos.app.goo.gl/guh3L2qm8mgcFAmr6",msg:"Is photo mein future hai 😌"},
-{type:"video",src:"https://photos.app.goo.gl/imqfrUGhHJjc2r7x5",msg:"Background music tum ho 🎶"}
+"Romantic 💕: Tum ho toh ending bhi perfect.",
+"Comedy 😂: Hum thode cute cartoon hain.",
+"Drama 🎭: Pehle hug, phir baat 🤗"
 ];
 
 function randomDialog(){
@@ -257,7 +171,6 @@ function randomDialog(){
 }
 
 teddy.onclick=()=>{
-  interactions++;
   teddy.className="teddy shake";
   msg.innerHTML=randomDialog();
   setTimeout(()=>teddy.className="teddy",400);
@@ -272,30 +185,8 @@ function loveMeter(){
 function scene(i){msg.innerHTML=scenes[i];}
 function nightMode(){document.body.classList.add("night");}
 function reset(){location.reload();}
-
-/* STORY */
-const story=document.getElementById("story");
-const storyMedia=document.getElementById("storyMedia");
-const storyMsg=document.getElementById("storyMsg");
-let storyIndex=0;
-
-function openStory(i){
-  storyIndex=i;
-  showStory();
-  story.style.display="flex";
-  teddy.classList.add("hug");
-}
-function showStory(){
-  const s=stories[storyIndex];
-  storyMedia.innerHTML=s.type==="img"
-    ? `<img src="${s.src}">`
-    : `<video src="${s.src}" autoplay controls></video>`;
-  storyMsg.innerHTML=s.msg;
-}
-function nextStory(){storyIndex=(storyIndex+1)%stories.length;showStory();}
-function prevStory(){storyIndex=(storyIndex-1+stories.length)%stories.length;showStory();}
-function closeStory(){story.style.display="none";teddy.classList.remove("hug");}
 </script>
 
 </body>
 </html>
+
