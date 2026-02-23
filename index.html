@@ -1,275 +1,197 @@
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Valentine Day ❤️</title>
+<title>For Piya ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#ff4d6d,#ff758f,#ff9a9e);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  transition:1s;
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:#fff;
+    background:linear-gradient(-45deg,#ff4e50,#fc913a,#f9d423,#ff4e50);
+    background-size:400% 400%;
+    animation:gradientBG 12s ease infinite;
+    transition:0.5s;
+}
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+body.dark{
+    background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#0f2027);
+    background-size:400% 400%;
+}
+
+.container{
+    width:90%;
+    max-width:750px;
+    padding:50px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(25px);
+    box-shadow:0 0 40px rgba(255,255,255,0.2);
+    text-align:center;
+    animation:fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+h2{
+    font-weight:700;
+    margin-bottom:20px;
+    font-size:28px;
+    letter-spacing:1px;
+}
+
+.letter{
+    margin-top:20px;
+    font-size:16px;
+    line-height:1.8;
+    min-height:220px;
+    white-space:pre-line;
+}
+
+.cursor{
+    display:inline-block;
+    width:2px;
+    background:white;
+    animation:blink 1s infinite;
+    margin-left:3px;
+}
+
+@keyframes blink{
+    0%,50%,100%{opacity:1;}
+    25%,75%{opacity:0;}
+}
+
+button{
+    margin:15px 10px 0;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-weight:500;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(45deg,#ff416c,#ff4b2b);
+    box-shadow:0 0 15px rgba(255,75,43,0.6);
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(255,75,43,1);
+}
+
+footer{
+    margin-top:20px;
+    font-size:13px;
+    opacity:0.8;
 }
 
 /* Floating hearts */
 .heart{
-  position:absolute;
-  color:#fff;
-  font-size:20px;
-  animation:float 8s linear infinite;
-  opacity:.7;
-}
-@keyframes float{
-  0%{transform:translateY(110vh) scale(.5);}
-  100%{transform:translateY(-10vh) scale(1.3);}
+    position:absolute;
+    bottom:-20px;
+    color:rgba(255,255,255,0.7);
+    animation:floatUp linear infinite;
 }
 
-/* Card */
-.card{
-  width:92%;
-  max-width:420px;
-  background:rgba(255,255,255,.18);
-  backdrop-filter:blur(16px);
-  border-radius:28px;
-  padding:25px;
-  text-align:center;
-  color:#fff;
-  box-shadow:0 25px 50px rgba(0,0,0,.35);
-  animation:pop .8s ease;
-}
-@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
-
-h1{font-size:2.1rem;}
-.name{font-weight:bold;text-shadow:0 0 12px #fff;}
-
-.teddy{
-  font-size:90px;
-  animation:bounce 2s infinite;
-  cursor:pointer;
-}
-@keyframes bounce{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-18px)}
-}
-.shake{animation:shake .4s}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
-}
-.hug{animation:hug .7s infinite alternate}
-@keyframes hug{from{transform:scale(1)}to{transform:scale(1.15)}}
-
-.msg{
-  margin:14px 0;
-  font-size:1.05rem;
-  min-height:70px;
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(0.8); opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(-110vh) scale(1.2); opacity:0;}
 }
 
-/* Buttons */
-.btn{
-  width:100%;
-  padding:12px;
-  margin:7px 0;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ffe259,#ffa751);
-  color:#333;
-  font-size:1rem;
-  cursor:pointer;
-  transition:.3s;
+/* Responsive */
+@media(max-width:600px){
+    .container{
+        padding:30px;
+    }
+    h2{
+        font-size:22px;
+    }
+    .letter{
+        font-size:14px;
+    }
 }
-.btn:hover{transform:scale(1.05);}
-
-/* Love meter */
-.meter{
-  height:14px;
-  width:100%;
-  background:rgba(255,255,255,.3);
-  border-radius:20px;
-  overflow:hidden;
-}
-.fill{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#ff4d6d,#ff9a9e);
-  transition:1s;
-}
-
-.night{background:radial-gradient(circle at top,#1b1f3b,#000);}
-.footer{font-size:.8rem;opacity:.8;margin-top:8px}
-
-/* Overlay */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-.overlay-box{
-  text-align:center;
-  color:#fff;
-  max-width:320px;
-}
-.choice-btn{
-  margin-top:12px;
-  padding:12px;
-  border:none;
-  width:100%;
-  border-radius:30px;
-  font-size:1rem;
-  cursor:pointer;
-}
-.love-btn{background:linear-gradient(135deg,#ff4d6d,#ff9a9e)}
-.destiny-btn{background:linear-gradient(135deg,#6a85b6,#bac8e0)}
 </style>
 </head>
-
 <body>
 
-<script>
-for(let i=0;i<25;i++){
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=5+Math.random()*6+"s";
-  document.body.appendChild(h);
-}
-</script>
+<div class="container">
+    <h2>I'm Truly Sorry ❤️</h2>
+    <div class="letter" id="letter"></div>
+    <div class="cursor"></div>
 
-<div class="card">
-  <h1>Happy Valentine Day 💘</h1>
-  <p>For <span class="name">Piya</span></p>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+    <button onclick="copyText()">Copy Letter</button>
 
-  <div class="teddy" id="teddy">🧸</div>
-  <div class="msg" id="msg">Tap teddy… magic loading ✨</div>
-
-  <div class="meter"><div class="fill" id="fill"></div></div>
-
-  <button class="btn" onclick="loveMeter()">💖 Love Meter</button>
-  <button class="btn" onclick="scene(0)">🎬 Romantic</button>
-  <button class="btn" onclick="scene(1)">😂 Comedy</button>
-  <button class="btn" onclick="scene(2)">🎭 Drama</button>
-
-  <button class="btn" onclick="startProposal()">💍 Proposal Mode</button>
-
-  <div id="proposal" style="display:none">
-    <button class="btn" onclick="acceptLove()">YES ❤️</button>
-    <button class="btn" id="noBtn">NO 🙈</button>
-  </div>
-
-  <button class="btn" onclick="reset()">🔁 Replay</button>
-  <div class="footer">Made with ❤️ + full masti</div>
-</div>
-
-<div class="overlay" id="overlay">
-  <div class="overlay-box">
-    <div id="finalText"></div>
-    <button class="choice-btn love-btn" onclick="chooseLove()">❤️ Choose Love</button>
-  </div>
+    <footer>Made with ❤️</footer>
 </div>
 
 <script>
-const teddy=document.getElementById("teddy");
-const msg=document.getElementById("msg");
-const fill=document.getElementById("fill");
-const noBtn=document.getElementById("noBtn");
+const text = `I’ve been thinking a lot about what I said, and I feel deeply ashamed and sorry. I never should have spoken to you in that way or insulted you. You mean so much to me, and the last thing I ever want to do is hurt you.
 
-const dialogues=[
-"Tum meri favourite habit ho 😍",
-"Tum ho toh life HD lagti hai 🎬",
-"Tum smile karti ho aur logic fail ho jaata hai 😂",
-"Tum meri permanent feeling ho 💖",
-"Shortcut mein bolu? Dil tumhara hai ❤️"
-];
+I let my emotions take control, and instead of communicating calmly, I said things I truly didn’t mean. That’s not an excuse — it’s my mistake. You deserve respect, love, and kindness from me always.
 
-const scenes=[
-"Romantic Scene 🎥: Dil softly background music pe aa gaya.",
-"Comedy Scene 😂: Dil has raha hai bina joke ke.",
-"Drama Scene 🎭: Dil bol raha – bas wahi chahiye."
-];
+Please believe me when I say I regret my words. I value our relationship more than my ego or anger. I am working on being more patient and understanding because you deserve the best version of me.
 
-let proposalTimer;
+I’m really sorry for hurting you and I hope you can forgive me.`;
 
-teddy.onclick=()=>{
-  teddy.className="teddy shake";
-  msg.innerHTML=dialogues[Math.floor(Math.random()*dialogues.length)];
-  setTimeout(()=>teddy.className="teddy",400);
-};
+let index=0;
+const speed=25;
+const letter=document.getElementById("letter");
 
-function loveMeter(){
-  let v=Math.floor(Math.random()*20)+80;
-  fill.style.width=v+"%";
-  msg.innerHTML=`Love Level ${v}% 💕 (Certified Real)`;
+function typeEffect(){
+    if(index<text.length){
+        letter.innerHTML+=text.charAt(index);
+        index++;
+        setTimeout(typeEffect,speed);
+    }
+}
+typeEffect();
+
+function toggleTheme(){
+    document.body.classList.toggle("dark");
 }
 
-function scene(i){msg.innerHTML=scenes[i];}
-
-function startProposal(){
-  msg.innerHTML="Final question… ready ho? 😌";
-  document.getElementById("proposal").style.display="block";
-
-  // AUTO YES AFTER 5 SECONDS
-  proposalTimer=setTimeout(()=>{
-    acceptLove();
-  },5000);
+function copyText(){
+    navigator.clipboard.writeText(text);
+    alert("Letter copied ❤️");
 }
 
-noBtn.onmouseover=()=>{
-  noBtn.style.position="absolute";
-  noBtn.style.left=Math.random()*70+"%";
-  noBtn.style.top=Math.random()*70+"%";
-};
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+10)+"px";
+    heart.style.animationDuration=(Math.random()*3+4)+"s";
+    document.body.appendChild(heart);
 
-function acceptLove(){
-  clearTimeout(proposalTimer);
-  document.getElementById("proposal").style.display="none";
-  document.body.classList.add("night");
-  document.getElementById("overlay").style.display="flex";
-  typeText(document.getElementById("finalText"),
-    "Decision locked 🔐\nYou & Me — Endgame ❤️");
-  teddy.classList.add("hug");
-  heartBlast();
+    setTimeout(()=>{heart.remove();},7000);
 }
-
-function chooseLove(){
-  document.getElementById("overlay").style.display="none";
-  msg.innerHTML="NO option existed… but destiny already chose YES 💘";
-}
-
-function heartBlast(){
-  for(let i=0;i<20;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.fontSize="26px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),4000);
-  }
-}
-
-function typeText(el,text,i=0){
-  if(i<text.length){
-    el.innerHTML+=text.charAt(i);
-    setTimeout(()=>typeText(el,text,i+1),40);
-  }
-}
-
-function reset(){location.reload();}
+setInterval(createHeart,600);
 </script>
 
 </body>
